@@ -2,6 +2,9 @@
 import streamlit as st
 from snowflake.snowpark.functions import col
 
+st.warning("⏸️ Приложение временно остановлено.")
+st.stop()
+
 # Write directly to the app
 st.title("My Parents New Healthy Dinner")
 st.write(
