@@ -3,7 +3,7 @@ import streamlit as st
 from snowflake.snowpark.functions import col
 
 # Write directly to the app
-st.title(f":cup_with_straw: Customize your smoothie :cup_with_straw: {st.__version__}")
+st.title("My Parents New Healthy Dinner")
 st.write(
   """Choose the fruit you want in your custom Smoothie!
   """
@@ -12,8 +12,17 @@ st.write(
 name_on_order = st.text_input('Name on Smoothie:')
 st.write('The name on your Smoothie will be:', name_on_order)
 
-cnx = st.connection("snowflake")
-session = cnx.session()
+# cnx = st.connection("snowflake")
+# session = cnx.session()
+
+try:
+    cnx = st.connection("snowflake", type="snowflake")
+    session = cnx.session()
+except Exception as e:
+    st.error("❌ Не удалось подключиться к Snowflake.")
+    st.write(f"Ошибка: {e}")
+    st.stop()
+
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('fruit_name'))
 # st.dataframe(data=my_dataframe, use_container_width=True)
 ingredients_list=st.multiselect(
